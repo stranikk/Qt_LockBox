@@ -24,17 +24,23 @@ void AddOrRead::setName(path p) {
     name = p;
 }
 
-QString AddOrRead::logToKey(QString log)
+QString AddOrRead::logPasToKey(QString logpas , bool mode)
 {
+    
     QByteArray ba=log.toUtf8();
-    log=QCryptographicHash::hash(ba,QCryptographicHash::Sha256).toHex();
-    log=log.mid(0,16);
+    logpas=QCryptographicHash::hash(ba,QCryptographicHash::Sha256).toHex();
+    logpas=log.mid(0,16);
+    if (mode=="true"){
     for (int i{log.size()};i < 16;++i){
        log +="e";
        log.replace(QRegularExpression("[g-zG-Z]"), "f");
     }
-
-    return log;
+    else{
+       for (int i{log.size()};i < 16;++i){
+       log +="c";
+       log.replace(QRegularExpression("[g-zG-Z]"), "b");
+    }
+    return logpas;
 }
 
 void AddOrRead::ShowFiles(){
@@ -73,7 +79,7 @@ void AddOrRead::on_AddNew_clicked()
     std::string shifr;
     ofstream fout((lockbox/name/NamePath.filename()).string().c_str()); //открыли файл для записи
     for (unsigned int i = 0; i<lines.size(); i++){ //записываем в открытый файл зашифрованные строки из вектора
-        shifr = crpt.MyShifr(lines[i],logToKey(Log).toStdString(),logToKey(Pswd).toStdString(),true);
+        shifr = crpt.MyShifr(lines[i],logPasToKey(Log,true).toStdString(),logPasToKey(Pswd,false).toStdString(),true);
         fout << shifr << "\n";
     }
     fout.close(); // закрываем файл
@@ -146,7 +152,7 @@ void AddOrRead::on_GetFile_clicked()
         file.open(QIODevice::ReadOnly);
         while (!file.atEnd()) {
                QByteArray line = file.readLine();
-               string deshifr = crpt.MyShifr((string)line.data(),logToKey(Log).toStdString(),logToKey(Pswd).toStdString(),false);
+               string deshifr = crpt.MyShifr((string)line.data(),logPasToKey(Log,true).toStdString(),logPasToKey(Pswd,false).toStdString(),false);
                QString a(deshifr.c_str());
                out << a;
         }
