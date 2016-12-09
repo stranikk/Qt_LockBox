@@ -204,3 +204,5 @@ void AddOrRead::on_DeleteFile_clicked()
     }
 
 }
+
+        
