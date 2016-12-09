@@ -36,14 +36,14 @@ private slots:
 
 signals:
     void UserChange(path);
-    void LogPass(string, string);
+    void LogPass(std::string, std::string);
     void Changed();
 
 private:
     Ui::MainWindow *ui;
 
-    string name;
-    string pswd;
+    std::string name;
+    std::string pswd;
 };
 
 #endif // MAINWINDOW_H
