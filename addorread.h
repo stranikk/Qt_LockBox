@@ -26,7 +26,7 @@ class AddOrRead : public QDialog
 
 public:
     explicit AddOrRead(QWidget *parent = 0,path p = path(QDir::currentPath().toStdString()));
-    QString logToKey(QString);
+    QString logPasToKey(QString,bool);
     ~AddOrRead();
 
 
