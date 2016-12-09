@@ -7,6 +7,7 @@
 #include <boost/filesystem.hpp>
 #include <addorread.h>
 
+using namespace std;
 namespace Ui {
 class MainWindow;
 }
@@ -36,14 +37,14 @@ private slots:
 
 signals:
     void UserChange(path);
-    void LogPass(std::string, std::string);
+    void LogPass(string, string);
     void Changed();
 
 private:
     Ui::MainWindow *ui;
 
-    std::string name;
-    std::string pswd;
+    string name;
+    string pswd;
 };
 
 #endif // MAINWINDOW_H
